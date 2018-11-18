@@ -4,7 +4,24 @@
         <b-container>
             <!-- presentation -->
             <b-row class="fullscreen">
-                <vue-particles></vue-particles>
+                <vue-particles
+                    color="#dedede"
+                    :particleOpacity="0.7"
+                    :particlesNumber="80"
+                    shapeType="circle"
+                    :particleSize="5"
+                    linesColor="#dedede"
+                    :linesWidth="1"
+                    :lineLinked="true"
+                    :lineOpacity="0.4"
+                    :linesDistance="150"
+                    :moveSpeed="3"
+                    :hoverEffect="true"
+                    hoverMode="grab"
+                    :clickEffect="true"
+                    clickMode="repulse"
+                >
+                </vue-particles>
                 <div class="presentation">
                     <div class="ehealth-access">
                         <h1>E-Health: plataforma unificada de prontuários</h1>
@@ -15,6 +32,7 @@
                 </div>
             </b-row>
         </b-container>
+        
     </div>
 </template>
 
@@ -39,7 +57,7 @@ export default {
 .homepage {
     background: url('../assets/background.jpg');
     background-size: cover;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
 }
 
@@ -70,8 +88,8 @@ export default {
 }
 
 #particles-js {
-    position: fixed;
+    position: absolute;
     z-index: 0;
-    width: 100%;
+    width: 70%;
 }
 </style>

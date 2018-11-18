@@ -1,6 +1,6 @@
 <template>
     <div class="navbar">
-        <b-navbar toggleable="md" type="dark" variant="default" fixed>
+        <b-navbar toggleable="md" type="dark" variant="default">
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
             <b-navbar-brand href="#/">E-Health</b-navbar-brand>
             <b-collapse is-nav id="nav_collapse">
