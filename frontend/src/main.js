@@ -8,6 +8,8 @@ import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 import Vue2Sidebar from 'vue2-sidebar';
 Vue.use(Vue2Sidebar)
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 // our bootstrap css files dependencies
 import 'bootstrap/dist/css/bootstrap.css'

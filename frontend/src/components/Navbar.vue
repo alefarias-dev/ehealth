@@ -1,6 +1,6 @@
 <template>
     <div class="navbar">
-        <b-navbar toggleable="md" type="dark" variant="info" fixed>
+        <b-navbar toggleable="md" type="dark" variant="default" fixed>
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
             <b-navbar-brand href="#/">E-Health</b-navbar-brand>
             <b-collapse is-nav id="nav_collapse">
@@ -26,6 +26,7 @@ export default {
     width: 100%;
     nav {
         padding: 5px 30px;
+        background: rgba(0, 0, 0, 0.6);
     }
 }
 </style>
