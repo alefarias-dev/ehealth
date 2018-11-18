@@ -6,6 +6,8 @@ import store from './store'
 // our dependencies
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
+import Vue2Sidebar from 'vue2-sidebar';
+Vue.use(Vue2Sidebar)
 
 // our bootstrap css files dependencies
 import 'bootstrap/dist/css/bootstrap.css'

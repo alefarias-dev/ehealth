@@ -23,7 +23,7 @@ export default {
 .navbar {
     margin: 0;
     padding: 0;
-    width: 100vw;
+    width: 100%;
     nav {
         padding: 5px 30px;
     }
