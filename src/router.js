@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Homepage from './views/Homepage.vue'
+import EHealthLogin from './views/EHealthLogin.vue'
 
 Vue.use(Router)
 
@@ -10,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Homepage
+    },
+    {
+      path: '/ehealth',
+      name: 'ehealth-login',
+      component: EHealthLogin
     }
   ]
 })
