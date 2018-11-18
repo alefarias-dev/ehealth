@@ -42,8 +42,9 @@
                                 <b-form-input size="sm" type="password" placeholder="***************"></b-form-input>
                             </b-form-group>
 
-                            <b-button size="sm" type="submit" variant="primary">Finalizar cadastro</b-button>
-                            <b-button size="sm" type="reset" variant="danger">Limpar formulário</b-button>
+                            <b-button size="sm" type="submit" variant="primary" disabled>Finalizar cadastro</b-button>
+                            <b-button size="sm" type="reset" variant="danger" disabled>Limpar formulário</b-button>
+                           
                         </b-form>
                     </div>
                 </b-col>
@@ -59,15 +60,15 @@
                             </b-form-group>
                             <!-- cadsus -->
                             <b-form-group label-size="sm" label="CADSUS" v-if="tipoLogin==1">
-                                <b-form-input size="sm" placeholder="Digite o número do seu CADSUS"></b-form-input>
+                                <b-form-input size="sm" v-bind:required="tipoLogin==1" placeholder="Digite o número do seu CADSUS"></b-form-input>
                             </b-form-group>
                             <!-- CRM -->
                             <b-form-group label-size="sm" label="CRM" v-if="tipoLogin==2">
-                                <b-form-input size="sm" placeholder="Digite o número do seu CRM"></b-form-input>
+                                <b-form-input size="sm" v-bind:required="tipoLogin==2" placeholder="Digite o número do seu CRM"></b-form-input>
                             </b-form-group>
                             <!-- senha -->
                             <b-form-group label-size="sm" label="Senha">
-                                <b-form-input size="sm" type="password" placeholder="***************"></b-form-input>
+                                <b-form-input size="sm" type="password" placeholder="***************" required></b-form-input>
                             </b-form-group>
 
                             <b-button size="sm" type="submit" variant="success">Entrar</b-button>
