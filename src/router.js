@@ -19,7 +19,7 @@ export default new Router({
       component: EHealthLogin
     },
     {
-      path: '/ethereum',
+      path: '/ethereum-debug',
       name: 'testing-ethereum',
       component: TestingEthereum
     }

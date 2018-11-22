@@ -2,7 +2,7 @@
     <div class="testing-ethereum">
         <b-container> 
             <b-row>
-                <b-col cols="6">
+                <b-col cols="12">
                     <h2>Debug page for ethreum</h2>
                     <b-form-group label="Contract hash" >
                         <b-form-input v-model="contratoAConsultar"></b-form-input>
@@ -13,10 +13,10 @@
                         <p>Médico: {{ profissional }}</p>
                         <p>Inicio Consulta: {{ inicioPermanencia }}</p>
                         <p>Fim Consulta: {{ fimPermanencia }}</p>
+                        <p>Evoluções: {{ evolucoes }}</p>
                     </div>
                 </b-col>
             </b-row>
-            <label v-if="showSuccess">Contract read with success!</label>
         </b-container>
     </div>
 </template>
@@ -45,6 +45,7 @@ export default {
             profissional: "",
             inicioPermanencia: "",
             fimPermanencia: "",
+            evolucoes: "",
             contratoAConsultar: "0x2413F7418D7d8fB015c548C9fAc28ADeEeCBc4fc"
         }
     },
@@ -63,7 +64,9 @@ export default {
             })
             contract.methods.fimPermanencia().call().then(response => {
                 this.fimPermanencia = response
-                alert('contrato lido com sucesso')
+            })
+            contract.methods.evolucoes().call().then(response => {
+                this.evolucoes = response
             })
         }
     }
