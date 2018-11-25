@@ -10,6 +10,8 @@
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
     "express": "^4.16.4",
+    "truffle": "^4.1.14",
+    "truffle-hdwallet-provider": "0.0.6",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vue2-sidebar": "0.0.16",
