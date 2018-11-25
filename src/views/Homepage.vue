@@ -24,7 +24,7 @@
                 </vue-particles>
                 <div class="presentation">
                     <div class="ehealth-access">
-                        <h1>E-Health: plataforma unificada de prontuários</h1>
+                        <h1>E-Health: plataforma unificada de prontuários médicos</h1>
                         <a href="#/ehealth" class="link">
                             <h2>Acessar o E-Health</h2>
                         </a>
@@ -64,6 +64,7 @@ export default {
 .fullscreen {
     width: 100%;
     height: calc(100vh - 50px);
+    text-align: center;
     .presentation {
         width: 100%;
         height: auto;
