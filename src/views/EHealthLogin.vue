@@ -113,8 +113,8 @@ export default {
     },
     methods: {
         login() {
-            var crm = "1234"
-            var cadsus = "a1234"
+            var crm = "DC010203"
+            var cadsus = "JB010203"
             var password = "1234"
 
             if (this.tipoLogin == 1 && cadsus == this.cadsusLogin && this.password == password) {

@@ -4,6 +4,7 @@ import Homepage from './views/Homepage.vue'
 import EHealthLogin from './views/EHealthLogin.vue'
 import TestingEthereum from './views/TestingEthereum.vue'
 import Doctor from './views/Doctor.vue'
+import Patient from './views/Patient.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/medico',
       name: 'medico',
       component: Doctor
+    },
+    {
+      path: '/paciente',
+      name: 'paciente',
+      component: Patient
     }
   ]
 })

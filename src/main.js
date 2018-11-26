@@ -10,6 +10,10 @@ import Vue2Sidebar from 'vue2-sidebar';
 Vue.use(Vue2Sidebar)
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
+import axios from 'axios'
+import VueAxios from 'vue-axios' 
+Vue.use(VueAxios, axios)
+
 
 // our bootstrap css files dependencies
 import 'bootstrap/dist/css/bootstrap.css'
