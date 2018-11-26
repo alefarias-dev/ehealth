@@ -13,6 +13,8 @@ Vue.use(VueParticles)
 import axios from 'axios'
 import VueAxios from 'vue-axios' 
 Vue.use(VueAxios, axios)
+import Loading from 'vue-loading-overlay'
+Vue.use(Loading)
 
 
 // our bootstrap css files dependencies

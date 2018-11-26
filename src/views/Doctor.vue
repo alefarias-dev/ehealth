@@ -7,6 +7,16 @@
                     <b-col cols="12">
                         <b-form>
                             <h4>Dados do paciente</h4>
+                            
+                            <div class="load-info">
+                                <loading 
+                                    :active.sync="isLoading"
+                                    :can-cancel="true"
+                                    :is-full-page="true"
+                                ></loading>
+                                <strong v-if="isLoading">{{ loadingMessage }}</strong>
+                            </div>
+
                             <b-form-group label="Paciente">
                                 <b-form-select :options="options.pacientes" v-model="consulta.paciente"></b-form-select>
                             </b-form-group>
@@ -65,7 +75,7 @@
                 </b-row>
                 <b-row>
                     <b-col cols="12">
-                        <b-button variant="success" v-on:click="deployConsulta">Finalizar consulta</b-button>
+                        <b-button variant="success" v-bind:disabled="isLoading" v-on:click="deployConsulta">Finalizar consulta</b-button>
                     </b-col>
                 </b-row>
             </b-container>
@@ -78,6 +88,7 @@ import Navbar from '@/components/Navbar.vue'
 import Web3 from 'web3'
 import HDWalletProvider from 'truffle-hdwallet-provider'
 import axios from 'axios'
+import Loading from 'vue-loading-overlay'
 
 // contract consulta compiled
 var consultaInterface = require('./consulta.js')
@@ -177,7 +188,8 @@ var options = {
 export default {
     name: "Doctor",
     components: {
-        Navbar
+        Navbar,
+        Loading
     },
     data () {
         return {
@@ -186,7 +198,9 @@ export default {
             medicamento: medicamento,
             repouso: repouso,
             exame: exame,
-            options: options
+            options: options,
+            isLoading: false,
+            loadingMessage: "Carregando"
         }
     },
     methods: {
@@ -200,6 +214,9 @@ export default {
                 alert('Repouso definido sem CID, selecione o CID para finalizar a consulta!')
                 return
             }
+
+            this.isLoading = true
+            this.loadingMessage = "Realizando deploy da consulta..."
             
             contract.deploy({
                 data: '0x'+consultaInterface.bytecode,
@@ -210,46 +227,52 @@ export default {
                 var idPaciente = this.consulta.paciente
                 var hashConsulta = contractInstance.options.address
 
+                this.loadingMessage = "Salvando " + hashConsulta + " no prontuário do paciente " + idPaciente + "..."
                 axios.post('https://ehealth-backend.herokuapp.com/newContract', {'id_paciente':idPaciente, 'hash_consulta':hashConsulta})
                 .then(res => {
                     console.log(res)
                 })
 
+                this.loadingMessage = "Registrando evolução em " + hashConsulta + "..."
                 contractInstance.methods.registraConsulta(this.consulta.evolucoes).send({from: account}).then(res => {
                     console.log(res)
+                    this.loadingMessage = "Evolução registrada!"
+                    this.isLoading = false;
                 })
-                
+
                 console.log("Contract deployed at: " + hashConsulta)
 
-                var nonce = 0
+                // var nonce = 0
 
-                web3.eth.getTransactionCount(account).then(nounce => {
-                    nonce = nounce
+                // TODO: deploy de repouso, medicamento e exame
+                // web3.eth.getTransactionCount(account).then(nounce => {
+                //     nonce = nounce
 
-                    if (deployRepouso) {
-                        contractInstance.methods.solicitaRepouso(this.repouso.periodo, this.repouso.justificativa, this.repouso.cid)
-                            .send({from: account, nonce: nonce + 1})
-                            .then(response => {
-                                console.log(response + " aaaaa")
-                        })
-                    }
+                //     if (deployRepouso) {
+                //         contractInstance.methods.solicitaRepouso(this.repouso.periodo, this.repouso.justificativa, this.repouso.cid)
+                //             .send({from: account, nonce: nonce + 1})
+                //             .then(response => {
+                //                 console.log(response + " aaaaa")
+                //         })
+                //     }
 
-                    if (deployMedicamento) {
-                        contractInstance.methods.solicitaMedicamento(this.medicamento.nome, this.medicamento.posologia, this.medicamento.prazo)
-                            .send({from: account, nonce: nonce + 2})
-                            .then(response => {
-                                console.log(response)
-                            })
-                    }
+                //     if (deployMedicamento) {
+                //         contractInstance.methods.solicitaMedicamento(this.medicamento.nome, this.medicamento.posologia, this.medicamento.prazo)
+                //             .send({from: account, nonce: nonce + 2})
+                //             .then(response => {
+                //                 console.log(response)
+                //             })
+                //     }
 
-                    if (deployExame) {   
-                        contractInstance.methods.solicitaExame(this.exame.nome, this.exame.observacao, this.exame.id)
-                            .send({from: account, nonce: nonce + 3})
-                            .then(response => {
-                                console.log(response)
-                            })
-                    }
-                })
+                //     if (deployExame) {   
+                //         contractInstance.methods.solicitaExame(this.exame.nome, this.exame.observacao, this.exame.id)
+                //             .send({from: account, nonce: nonce + 3})
+                //             .then(response => {
+                //                 console.log(response)
+                //             })
+                //     }
+                // })
+  
             })
         }
     }
@@ -257,6 +280,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.load-info {
+    text-align: center;
+}
 </style>
 
