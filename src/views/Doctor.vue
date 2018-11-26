@@ -238,9 +238,8 @@ export default {
                     console.log(res)
                     this.loadingMessage = "Evolução registrada!"
                     this.isLoading = false;
+                    this.$swal('Concluído', "O Contrato do paciente "+ idPaciente +" foi salvo!", 'success')
                 })
-
-                console.log("Contract deployed at: " + hashConsulta)
 
                 // var nonce = 0
 

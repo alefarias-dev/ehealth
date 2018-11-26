@@ -10,12 +10,11 @@ import Vue2Sidebar from 'vue2-sidebar';
 Vue.use(Vue2Sidebar)
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
+import VueSweetAlert2 from 'vue-sweetalert2'
+Vue.use(VueSweetAlert2)
 import axios from 'axios'
 import VueAxios from 'vue-axios' 
 Vue.use(VueAxios, axios)
-import Loading from 'vue-loading-overlay'
-Vue.use(Loading)
-
 
 // our bootstrap css files dependencies
 import 'bootstrap/dist/css/bootstrap.css'
