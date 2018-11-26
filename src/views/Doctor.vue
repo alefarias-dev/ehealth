@@ -233,7 +233,7 @@ export default {
                     console.log(res)
                 })
 
-                this.loadingMessage = "Registrando evolução em " + hashConsulta + "..."
+                this.loadingMessage = "Registrando evolução em " + hashConsulta
                 contractInstance.methods.registraConsulta(this.consulta.evolucoes).send({from: account}).then(res => {
                     console.log(res)
                     this.loadingMessage = "Evolução registrada!"
