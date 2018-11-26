@@ -19,7 +19,7 @@ html, body {
 
   // sidebar css
   #sidebar {
-    background-color: #505256 !important;
+    background-image: linear-gradient(to right, #42d1f4, #28c985) !important;
     li {
       background-color: #353638;
       :hover {
@@ -27,6 +27,10 @@ html, body {
         color: #17a2b8 !important;
         text-decoration: none;
       }
+    }
+
+    ul {
+      border-bottom: none !important;
     }
   }
 }

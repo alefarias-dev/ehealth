@@ -60,18 +60,21 @@
                             </b-form-group>
                             <!-- cadsus -->
                             <b-form-group label-size="sm" label="CADSUS" v-if="tipoLogin==1">
-                                <b-form-input size="sm" v-bind:required="tipoLogin==1" placeholder="Digite o número do seu CADSUS"></b-form-input>
+                                <b-form-input size="sm" v-bind:required="tipoLogin==1" placeholder="Digite o número do seu CADSUS"
+                                v-model="cadsusLogin"></b-form-input>
                             </b-form-group>
                             <!-- CRM -->
                             <b-form-group label-size="sm" label="CRM" v-if="tipoLogin==2">
-                                <b-form-input size="sm" v-bind:required="tipoLogin==2" placeholder="Digite o número do seu CRM"></b-form-input>
+                                <b-form-input size="sm" v-bind:required="tipoLogin==2" placeholder="Digite o número do seu CRM"
+                                v-model="crmLogin"></b-form-input>
                             </b-form-group>
                             <!-- senha -->
                             <b-form-group label-size="sm" label="Senha">
-                                <b-form-input size="sm" type="password" placeholder="***************" required></b-form-input>
+                                <b-form-input size="sm" type="password" placeholder="***************" required
+                                v-model="password"></b-form-input>
                             </b-form-group>
 
-                            <b-button size="sm" type="submit" variant="success">Entrar</b-button>
+                            <b-button size="sm" type="button" v-on:click="login" variant="success">Entrar</b-button>
                         </b-form>
                     </div>
                 </b-col>
@@ -99,11 +102,31 @@ export default {
         return {
             opcoesRegistro: opcoesRegistro,
             tipoCadastro: tipoCadastro,
-            tipoLogin: tipoLogin
+            tipoLogin: tipoLogin,
+            crmLogin: "",
+            cadsusLogin: "",
+            password: ""
         }
     },
     components: {
         Navbar
+    },
+    methods: {
+        login() {
+            var crm = "1234"
+            var cadsus = "a1234"
+            var password = "1234"
+
+            if (this.tipoLogin == 1 && cadsus == this.cadsusLogin && this.password == password) {
+                // redirect to user login
+                this.$router.push('paciente')
+            } else if (this.tipoLogin == 2 && crm == this.crmLogin && this.password == password) {
+                // redirect to doctor login
+                this.$router.push('medico')
+            } else {
+                alert('Código ou senha incorretos!')
+            }
+        }
     }
 }
 </script>
