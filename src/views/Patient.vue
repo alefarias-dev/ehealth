@@ -87,9 +87,7 @@ export default {
         getPatientContracts() {
             var api_url = 'https://ehealth-backend.herokuapp.com/getContracts/' + this.pacienteId
             axios.get(api_url).then(res => {
-                console.log('ale')
                 this.hashConsultas = res.data.items
-                console.log(this.hashConsultas)
                 this.getAllContractsFromEthereum()
             })
         },

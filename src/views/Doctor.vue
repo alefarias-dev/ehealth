@@ -31,8 +31,7 @@
                             </b-form-group>
                         </b-form>
                     </b-col>
-                </b-row>
-                <b-row>
+                
                     <b-col cols="4"> 
                         <b-form>
                             <h6>Solicitar medicamento</h6>
@@ -72,8 +71,6 @@
                             </b-form-group>
                         </b-form>
                     </b-col>
-                </b-row>
-                <b-row>
                     <b-col cols="12">
                         <b-button variant="success" v-bind:disabled="isLoading" v-on:click="deployConsulta">Finalizar consulta</b-button>
                     </b-col>
@@ -204,6 +201,10 @@ export default {
         }
     },
     methods: {
+        finishDeploy(idPaciente) {
+            this.isLoading = false;
+            this.$swal('Concluído', "Consulta do paciente "+ idPaciente +" foi salva!", 'success')
+        },
         deployConsulta() {
             var deployMedicamento = this.medicamento.nome != null;
             var deployRepouso = this.repouso.periodo > 0;
@@ -235,43 +236,36 @@ export default {
 
                 this.loadingMessage = "Registrando evolução em " + hashConsulta
                 contractInstance.methods.registraConsulta(this.consulta.evolucoes).send({from: account}).then(res => {
-                    console.log(res)
-                    this.loadingMessage = "Evolução registrada!"
-                    this.isLoading = false;
-                    this.$swal('Concluído', "O Contrato do paciente "+ idPaciente +" foi salvo!", 'success')
+
+                    var promiseRepouso = contractInstance.methods.solicitaRepouso(this.repouso.periodo, this.repouso.justificativa, this.repouso.cid)
+                    var promiseExame = contractInstance.methods.solicitaExame(this.exame.nome, this.exame.observacao, this.exame.id)
+                    var promiseMedicamento = contractInstance.methods.solicitaMedicamento(this.medicamento.nome, this.medicamento.posologia, this.medicamento.prazo)
+                    
+                    var promises = []
+
+                    if (deployMedicamento) promises.push({'name': 'medicamento','promise':promiseMedicamento})
+                    if (deployRepouso) promises.push({'name': 'repouso','promise':promiseRepouso})
+                    if (deployExame) promises.push({'name': 'exame','promise':promiseExame})
+
+                    // promises synchronized
+                    if (promises.length > 0) {
+                        this.loadingMessage = "Registrando " + promises[0].name + "..."
+                        promises[0].promise.send({from: account}).then(response => {
+                            if (promises.length > 1) {
+                                this.loadingMessage = "Registrando " + promises[1].name + "..."
+                                promises[1].promise.send({from: account}).then(response => {
+                                    if (promises.length > 2) {
+                                        this.loadingMessage = "Registrando " + promises[2].name + "..."
+                                        promises[2].promise.send({from: account}).then(response => {
+                                            this.finishDeploy(idPaciente)
+                                        })
+                                    } else this.finishDeploy(idPaciente)
+                                })
+                            } else this.finishDeploy(idPaciente)
+                        })
+                    } else this.finishDeploy(idPaciente)
+
                 })
-
-                // var nonce = 0
-
-                // TODO: deploy de repouso, medicamento e exame
-                // web3.eth.getTransactionCount(account).then(nounce => {
-                //     nonce = nounce
-
-                //     if (deployRepouso) {
-                //         contractInstance.methods.solicitaRepouso(this.repouso.periodo, this.repouso.justificativa, this.repouso.cid)
-                //             .send({from: account, nonce: nonce + 1})
-                //             .then(response => {
-                //                 console.log(response + " aaaaa")
-                //         })
-                //     }
-
-                //     if (deployMedicamento) {
-                //         contractInstance.methods.solicitaMedicamento(this.medicamento.nome, this.medicamento.posologia, this.medicamento.prazo)
-                //             .send({from: account, nonce: nonce + 2})
-                //             .then(response => {
-                //                 console.log(response)
-                //             })
-                //     }
-
-                //     if (deployExame) {   
-                //         contractInstance.methods.solicitaExame(this.exame.nome, this.exame.observacao, this.exame.id)
-                //             .send({from: account, nonce: nonce + 3})
-                //             .then(response => {
-                //                 console.log(response)
-                //             })
-                //     }
-                // })
-  
             })
         }
     }
